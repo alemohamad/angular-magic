@@ -1,27 +1,82 @@
-# AngularMagic
+# Angular — Magic: The Gathering
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10, using an [API service](https://magicthegathering.io) to get info about MTG cards.
 
-## Development server
+## Project steps
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**Note:** For this project you only need to do `npm install` to get the npm packages. You don't need to install each package.
 
-## Code scaffolding
+### 1. Create Angular project (with Angular Routing and SCSS).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+After installing [Node.js](https://nodejs.org/):
 
-## Build
+```bash
+$ npm install -g @angular/cli
+$ ng new angular-magic
+$ cd angular-magic
+$ ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Navigate to [http://localhost:4200/](http://localhost:4200/) to preview the project.
 
-## Running unit tests
+### 2. Add Bootstrap and jQuery.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+$ npm i --save jquery
+$ npm i --save bootstrap@4
+```
 
-## Running end-to-end tests
+At the `angular.json` file:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```javascript
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+],
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+]
+```
 
-## Further help
+### 3. Create module and add its components.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+$ ng g m magic --routing
+$ ng g c magic/home --skipTests=true
+$ ng g c magic/cards-list --skipTests=true
+$ ng g c magic/sets-list --skipTests=true
+```
+
+At the `app-routing.module.ts` file:
+
+```javascript
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () => import('./magic/magic.module').then(
+      module => module.MagicModule
+    )
+  }
+];
+```
+
+### 4. Create http service.
+
+```
+$ ng g s services/magic
+```
+
+### 5. Add interfaces and add queries.
+
+```
+$ ng g i services/interfaces
+```
+
+### 6. Updated html views at the components, assets and connect with the service.
+
+### 7. Export project for production.
+
+```
+$ ng build --prod
+```
