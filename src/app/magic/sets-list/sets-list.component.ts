@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { MagicService } from '../../services/magic.service';
+import { Set } from '../../services/interfaces';
 
 @Component({
   selector: 'app-sets-list',
@@ -7,9 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SetsListComponent implements OnInit {
 
-  constructor() { }
+  public sets: Set[];
+
+  constructor(
+    private _magicService: MagicService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.loadData(params);
+    });
+  }
+
+  loadData(params: any) {
+    this._magicService.getSets(params).subscribe(
+      data => {
+        this.sets = data.sets;
+      }
+    );
   }
 
 }

@@ -22,6 +22,9 @@ export class MagicService {
       let params = new HttpParams();
       params = params.set('pageSize', '30');
 
+      for (var key in paramsArgument)
+        params = params.set(key, paramsArgument[key]);
+
       this.cards$ = this.httpClient
         .get<CardsResponse>(`${this._baseUrl}/cards`, {
           params: params,
@@ -36,6 +39,9 @@ export class MagicService {
     if (!this.sets$) {
       let params = new HttpParams();
       params = params.set('pageSize', '30');
+
+      for (var key in paramsArgument)
+        params = params.set(key, paramsArgument[key]);
 
       this.sets$ = this.httpClient
         .get<SetsResponse>(`${this._baseUrl}/sets`, {

@@ -1,1 +1,11 @@
-<p>home works!</p>
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="mb-3 text-uppercased">Magic: The Gathering @ Angular</h1>
+    <p class="lead text-muted">Welcome to the Magic: The Gathering API! You can use the API to access Magic: The Gathering API endpoints, which can get information on cards and sets.</p>
+    <p class="lead text-muted">All API access is performed over HTTPS and accessed from the <a href="https://api.magicthegathering.io" target="_blank">https://api.magicthegathering.io</a> domain.</p>
+    <p>
+      <a [routerLink]="['/cards']" class="btn btn-dark my-2 mr-3">Go to Cards list</a>
+      <a [routerLink]="['/sets']" class="btn btn-secondary my-2">Go to Sets list</a>
+    </p>
+  </div>
+</section>

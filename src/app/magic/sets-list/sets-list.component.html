@@ -1,1 +1,53 @@
-<p>sets-list works!</p>
+<h1>Sets List</h1>
+
+<div><small>Filters:</small></div>
+<div class="btn-group mb-4" role="group" aria-label="Button group with nested dropdown">
+  <a class="btn btn-danger btn-sm" [routerLink]="['/sets']">All</a>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupName" type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Name
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupName">
+      <a class="dropdown-item" [routerLink]="['/sets']" [queryParams]="{name: 'khans'}">Khans</a>
+      <a class="dropdown-item" [routerLink]="['/sets']" [queryParams]="{name: 'origins'}">Origins</a>
+    </div>
+  </div>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupBlock" type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Block
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupBlock">
+      <a class="dropdown-item" [routerLink]="['/sets']" [queryParams]="{block: 'core set'}">Core Set</a>
+      <a class="dropdown-item" [routerLink]="['/sets']" [queryParams]="{block: 'kaladesh'}">Kaladesh</a>
+    </div>
+  </div>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupMixed" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Mixed
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupMixed">
+      <a class="dropdown-item" [routerLink]="['/sets']" [queryParams]="{name: 'khans', block: 'kaladesh'}">Khans (name) + Kaladesh (block)</a>
+      <a class="dropdown-item" [routerLink]="['/sets']" [queryParams]="{name: 'edition', block: 'core set'}">Edition (name) + Core Set (block)</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!sets">
+  Loading sets...
+</div>
+
+<div class="list-group">
+  <a [routerLink]="['/cards']" [queryParams]="{setName: set.name}" class="list-group-item list-group-item-action" *ngFor="let set of sets">
+    <h5 class="mb-1">
+      {{ set.name }}
+      <small>
+        {{ set.code }}
+        <span *ngIf="set.block">({{ set.block }})</span>
+      </small>
+    </h5>
+    <small>Release date: <strong>{{ set.releaseDate }}</strong></small>
+  </a>
+</div>

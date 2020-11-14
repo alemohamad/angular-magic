@@ -1,1 +1,91 @@
-<p>cards-list works!</p>
+<h1>Cards List</h1>
+
+<div><small>Filters:</small></div>
+
+<div class="btn-group mb-4" role="group" aria-label="Button group with nested dropdown">
+  <a class="btn btn-danger btn-sm" [routerLink]="['/cards']">All</a>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupName" type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Name
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupName">
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{name: 'jace'}">Jace</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{name: 'ajani'}">Ajani</a>
+    </div>
+  </div>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupSet" type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Set
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupSet">
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{setName: 'Ravnica'}">Ravnica</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{setName: 'Innistrad'}">Innistrad</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{setName: 'Urza'}">Urza</a>
+    </div>
+  </div>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupColor" type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Color
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupColor">
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{colors: 'blue'}">Blue</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{colors: 'white'}">White</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{colors: 'black'}">Black</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{colors: 'green'}">Green</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{colors: 'red'}">Red</a>
+    </div>
+  </div>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupMixed" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Mixed
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupMixed">
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{name: 'jace', setName: 'ravnica'}">Jace (name) + Ravnica (set)</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{setName: 'innistrad', colors: 'black'}">Innistrad (set) + Black (color)</a>
+      <a class="dropdown-item" [routerLink]="['/cards']" [queryParams]="{name: 'ajani', colors: 'white'}">Ajani (name) + White (color)</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!cards">
+  Loading cards...
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+  <div class="col mb-4" *ngFor="let card of cards">
+    <div class="card mb-3">
+      <div class="row no-gutters">
+        <div class="col-md-4" *ngIf="card.imageUrl; else noCardBlock">
+          <a [href]="card.imageUrl" target="_blank">
+            <img [src]="card.imageUrl" class="card-img" [alt]="card.name" [title]="card.name">
+          </a>
+        </div>
+        <ng-template #noCardBlock>
+          <div class="col-md-4">
+            <a [href]="'assets/no-card.jpg'" target="_blank">
+              <img [src]="'assets/no-card.jpg'" class="card-img" alt="No card">
+            </a>
+          </div>
+        </ng-template>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ card.name }}</h5>
+            <p class="card-text"><small class="text-muted"><strong>Mana Cost:</strong> {{ card.manaCost }}</small></p>
+            <p class="card-text"><small>{{ card.text }}</small></p>
+            <p class="card-text">
+              <small class="text-muted">
+                <a [routerLink]="['/sets']" [queryParams]="{name: card.setName}">{{ card.setName }}</a>
+                ({{ card.set }}) &bull; {{ card.number }}
+              </small>
+            </p>
+            <p class="card-text"><small class="text-muted"><strong>Artist:</strong> {{ card.artist }}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
