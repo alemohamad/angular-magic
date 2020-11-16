@@ -12,44 +12,35 @@ export class MagicService {
 
   private _baseUrl: string = "https://api.magicthegathering.io/v1";
 
-  private cards$: Observable<CardsResponse>;
-  private sets$: Observable<SetsResponse>;
-
   constructor(private httpClient: HttpClient) { }
 
   getCards(paramsArgument): Observable<CardsResponse> {
-    if (!this.cards$) {
-      let params = new HttpParams();
-      params = params.set('pageSize', '30');
+    let params = new HttpParams();
+    params = params.set('pageSize', '30');
 
-      for (var key in paramsArgument)
-        params = params.set(key, paramsArgument[key]);
+    for (var key in paramsArgument)
+      params = params.set(key, paramsArgument[key]);
 
-      this.cards$ = this.httpClient
-        .get<CardsResponse>(`${this._baseUrl}/cards`, {
-          params: params,
-          responseType: 'json'
-        })
-        .pipe(shareReplay(1));
-    }
-    return this.cards$;
+    return this.httpClient
+      .get<CardsResponse>(`${this._baseUrl}/cards`, {
+        params: params,
+        responseType: 'json'
+      })
+      .pipe(shareReplay(1));
   }
 
   getSets(paramsArgument): Observable<SetsResponse> {
-    if (!this.sets$) {
-      let params = new HttpParams();
-      params = params.set('pageSize', '30');
+    let params = new HttpParams();
+    params = params.set('pageSize', '30');
 
-      for (var key in paramsArgument)
-        params = params.set(key, paramsArgument[key]);
+    for (var key in paramsArgument)
+      params = params.set(key, paramsArgument[key]);
 
-      this.sets$ = this.httpClient
-        .get<SetsResponse>(`${this._baseUrl}/sets`, {
-          params: params,
-          responseType: 'json'
-        })
-        .pipe(shareReplay(1));
-    }
-    return this.sets$;
+    return this.httpClient
+      .get<SetsResponse>(`${this._baseUrl}/sets`, {
+        params: params,
+        responseType: 'json'
+      })
+      .pipe(shareReplay(1));
   }
 }
